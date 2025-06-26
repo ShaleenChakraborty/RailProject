@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Admin Dashboard</title>
+</head>
+<body>
+<h2>Create a New Data Entry Sheet</h2>
+<form th:action="@{/admin/createSheet}" method="post">
+    <label>Sheet Title:</label>
+    <input type="text" name="title" required/><br><br>
+
+    <label>Enter Fields (comma separated):</label><br>
+    <input type="text" name="fields" placeholder="Name, Age, City" required/><br><br>
+
+    <button type="submit">Create Sheet</button>
+</form>
+</body>
+</html>

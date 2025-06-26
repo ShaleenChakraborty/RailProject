@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Railway Portal</title>
+  <link rel="stylesheet" th:href="@{/css/home.css}" />
+</head>
+
+<body>
+
+<!-- Header Section -->
+<div class="header-wrapper">
+  <div class="header">
+    <img th:src="@{/images/indianrailwayslogo.jpg}" alt="Left Logo" class="logo-left"/>
+    <div class="title-box">
+      <h1>NORTHERN RAILWAYS</h1>
+      <h3>Moradabad Division</h3>
+      <h2>Portal for Test Room Control</h2>
+    </div>
+    <img th:src="@{/images/indianemblem.png}" alt="Right Logo" class="logo-right"/>
+  </div>
+</div>
+
+<!-- Navigation Bar -->
+<nav class="navbar">
+  <a th:href="@{/about}" class="nav-item">About Us</a>
+  <a th:href="@{/services}" class="nav-item">Services</a>
+  <a th:href="@{/nrhq}" class="nav-item">NR. HQ.</a>
+  <a th:href="@{/stations}" class="nav-item">Stations under MB</a>
+  <a th:href="@{/contact}" class="nav-item">Contact</a>
+  <a th:href="@{/login}" class="nav-item">Login</a>
+</nav>
+
+<!-- Landing Page Image -->
+<div class="landing-image-container">
+  <img th:src="@{/images/landingpagephoto.jpg}" alt="Landing" class="landing-image"/>
+</div>
+
+<!-- Login Button -->
+<div class="login-section">
+  <a th:href="@{/login}" class="login-button">Login</a>
+</div>
+<br>
+<br>
+<div class="para">
+<p>
+Northern Railway is a zonal division of Indian Railways, known as the largest zone in terms of route kilometers. It covers a vast network in the northern part of India, including states like Punjab, Haryana, Himachal Pradesh, Uttarakhand, Uttar Pradesh, and the Union Territories of Jammu and Kashmir, Delhi, and Chandigarh. The zone is headquartered in Delhi and is responsible for passenger and freight transportation within its jurisdiction.<br>
+Key points about Northern Railway:<br>
+<b>Largest Zone:</b><br>
+It is the largest zone in terms of route kilometers within the Indian Railways network.<br>
+<b>Geographic Coverage:</b><br>
+It encompasses a significant portion of North India, including several states and union territories.<br>
+<b>Divisions:</b><br>
+It is comprised of six divisions: Ambala, Delhi, Ferozpur, Lucknow, Moradabad, and Jammu.<br>
+<b>Key Roles:</b><br>
+Northern Railway plays a vital role in transporting passengers and goods, contributing to the economic development of the region.<br>
+<b>Historical Significance:</b><br>
+It was established in 1952 after the reorganization of Indian Railways into zones.<br>
+<b>Technological Advancements:</b><br>
+The zone is actively involved in integrating new technologies to enhance passenger services.<br><br>
+</p>
+</div>
+<!-- Footer Section -->
+<footer class="footer">
+  <p>All Rights Reserved</p>
+</footer>
+</body>
+</html>

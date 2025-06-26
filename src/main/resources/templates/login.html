@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - Railway Portal</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Calibri', sans-serif;
+      background-color: #ffffff;
+      color: #000;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    .header-wrapper {
+      background-color: #fff;
+      padding: 0.5rem 1.5rem 0.3rem 1.5rem;
+    }
+
+    .header {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .logo-left {
+      width: 120px;
+      height: auto;
+      margin-top: 0.5rem;
+    }
+
+    .logo-right {
+      width: 90px;
+      height: auto;
+      margin-top: 0.5rem;
+    }
+
+    .title-box {
+      text-align: center;
+      padding: 0 1rem;
+    }
+
+    .title-box h1 {
+      font-size: 3.5rem;
+      font-weight: 1500;
+      color: #2F2F8F;
+      margin-bottom: 0.1rem;
+    }
+
+    .title-box h3 {
+      font-size: 2rem;
+      font-weight: 1000;
+      color: #2F2F8F;
+      margin-bottom: 0.1rem;
+    }
+
+    .title-box h2 {
+      font-size: 2rem;
+      font-weight: 900;
+      color: #000;
+      margin-top: 0.5rem;
+    }
+
+    .blue-line {
+      height: 6px;
+      background-color: #2F2F8F;
+      width: 100%;
+    }
+
+    .home-button-wrapper {
+      text-align: center;
+      margin: 1rem 0;
+    }
+
+    .home-button {
+      background-color: #D9592A;
+      color: white;
+      padding: 0.4rem 1rem;
+      border: none;
+      border-radius: 20px;
+      font-size: 0.95rem;
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: background-color 0.3s ease;
+    }
+
+    .home-button:hover {
+      background-color: #b7451a;
+    }
+
+    .login-container {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+      animation: fadeIn 1s ease-in;
+    }
+
+    .login-box {
+      background-color: #2F2F8F;
+      padding: 2rem;
+      border-radius: 20px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      color: white;
+      animation: slideUp 0.8s ease-in-out;
+    }
+
+    .login-box h2 {
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: 1.8rem;
+    }
+
+    .login-box label {
+      display: block;
+      margin-bottom: 0.4rem;
+      font-weight: bold;
+    }
+
+    .login-box input {
+      width: 100%;
+      padding: 0.6rem;
+      border: none;
+      border-radius: 5px;
+      margin-bottom: 1.2rem;
+      font-size: 1rem;
+    }
+
+    .login-box button {
+      width: 100%;
+      padding: 0.8rem;
+      background-color: #D9592A;
+      border: none;
+      border-radius: 20px;
+      color: white;
+      font-weight: bold;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .login-box button:hover {
+      background-color: #b7451a;
+    }
+
+    .error-msg {
+      color: #ffaaaa;
+      text-align: center;
+      margin-top: 1rem;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    .footer {
+      background-color: #2F2F8F;
+      color: white;
+      text-align: center;
+      padding: 0.8rem 0;
+      font-size: 0.9rem;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideUp {
+      from {
+        transform: translateY(20px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .title-box h1 { font-size: 2rem; }
+      .title-box h3 { font-size: 1.1rem; }
+      .title-box h2 { font-size: 1rem; }
+      .logo-left, .logo-right { width: 70px; }
+      .login-box h2 { font-size: 1.4rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Header Section -->
+<div class="header-wrapper">
+  <div class="header">
+    <img th:src="@{/images/indianrailwayslogo.jpg}" alt="Left Logo" class="logo-left" />
+    <div class="title-box">
+      <h1>NORTHERN RAILWAYS</h1>
+      <h3>Moradabad Division</h3>
+      <h2>Portal for Test Room Control</h2>
+    </div>
+    <img th:src="@{/images/indianemblem.png}" alt="Right Logo" class="logo-right" />
+  </div>
+</div>
+
+<!-- Thick Blue Line -->
+<div class="blue-line"></div>
+
+<!-- Home Button -->
+<div class="home-button-wrapper">
+  <a th:href="@{/}" class="home-button">🏠 Home</a>
+</div>
+
+<!-- Login Section -->
+<div class="login-container">
+  <form class="login-box" action="/process-login" method="post">
+    <h2>Login as Admin/User</h2>
+    <label for="username">Enter Username</label>
+    <input type="text" id="username" name="username" required>
+
+    <label for="password">Enter Password</label>
+    <input type="password" id="password" name="password" required>
+
+    <button type="submit">Login</button>
+
+    <!-- Show only on invalid login -->
+    <p class="error-msg" th:if="${param.error}">Invalid Credentials</p>
+  </form>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  All Rights Reserved
+</div>
+
+</body>
+</html>
