@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sheet Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+          box-sizing: border-box;
+          margin: 0;
+          padding: 0;
+        }
+
+        body {
+          font-family: 'Calibri', sans-serif;
+          background-color: #ffffff;
+          display: flex;
+          flex-direction: column;
+          min-height: 100vh;
+        }
+
+        /* HEADER */
+        .header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 1rem 2rem;
+          background-color: white;
+        }
+
+        .logo-left {
+          width: 120px;
+        }
+
+        .logo-right {
+          width: 90px;
+        }
+
+
+.title-box {
+  text-align: center;
+  padding: 0 1rem;
+}
+
+.title-box h1 {
+  font-size: 3.5rem;
+  font-weight: 1500;
+  color: #2F2F8F;
+  margin-bottom: 0.1rem;
+  margin-top: 0rem;
+}
+
+.title-box h3 {
+  font-size: 2rem;
+  font-weight: 1000;
+  color: #2F2F8F;
+  margin-bottom: 0.1rem;
+  margin-top: 0rem;
+}
+
+.title-box h2 {
+  font-size: 2rem;
+  font-weight: 900;
+  color: #000;
+  margin-top: 0.5rem;
+}
+
+        .blue-line {
+          height: 6px;
+          background-color: #2F2F8F;
+          width: 100%;
+        }
+
+        /* MAIN CONTENT */
+        .dashboard-title {
+          color: #2F2F8F;
+          font-size: 2.5rem;
+          font-weight: bold;
+          text-align: center;
+          margin-top: 2rem;
+        }
+
+        .table-container {
+          max-width: 92%;
+          margin: 2rem auto;
+          overflow-y: auto;
+          max-height: 400px;
+          border-radius: 15px;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+          border: 1px solid #ddd;
+        }
+
+        table {
+          width: 100%;
+          border-collapse: collapse;
+          min-width: 1200px;
+        }
+
+        thead {
+          background-color: #2F2F8F;
+          color: white;
+        }
+
+        th, td {
+          padding: 1rem;
+          text-align: center;
+          font-size: 1rem;
+          border-bottom: 1px solid #ccc;
+        }
+
+        tr:nth-child(even) {
+          background-color: #f9f9f9;
+        }
+
+        button.open-btn {
+          background-color: #D9592A;
+          color: white;
+          padding: 0.4rem 1rem;
+          border: none;
+          border-radius: 8px;
+          cursor: pointer;
+          transition: 0.3s;
+        }
+
+        button.open-btn:hover {
+          background-color: #b7451a;
+        }
+
+        /* CREATE SHEET BUTTON */
+        .create-button-container {
+          display: flex;
+          justify-content: center;
+          margin: 2rem auto;
+        }
+
+        .create-button {
+          background-color: #49B821;
+          color: white;
+          font-size: 1.5rem;
+          font-weight: bold;
+          padding: 0.8rem 2.5rem;
+          border: none;
+          border-radius: 30px;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+        }
+
+        .create-button:hover {
+          background-color: #3ba019;
+        }
+
+        /* FOOTER */
+        .footer {
+          background-color: #2F2F8F;
+          color: white;
+          text-align: center;
+          padding: 0.8rem 0;
+          font-size: 0.9rem;
+          margin-top: auto;
+        }
+
+        @media (max-width: 768px) {
+          .title-box h1 {
+            font-size: 1.8rem;
+          }
+
+          .title-box h3 {
+            font-size: 1rem;
+          }
+
+          .title-box h2 {
+            font-size: 0.9rem;
+          }
+
+          .logo-left, .logo-right {
+            width: 60px;
+          }
+
+          .dashboard-title {
+            font-size: 2rem;
+          }
+
+          table {
+            min-width: unset;
+            font-size: 0.85rem;
+          }
+
+          th, td {
+            padding: 0.5rem;
+          }
+
+          .create-button {
+            font-size: 1.2rem;
+            padding: 0.6rem 1.5rem;
+          }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div class="header">
+    <img th:src="@{/images/indianrailwayslogo.jpg}" alt="Left Logo" class="logo-left" />
+    <div class="title-box">
+        <h1>NORTHERN RAILWAYS</h1>
+        <h3>Moradabad Division</h3>
+        <h2>Portal for Test Room Control</h2>
+    </div>
+    <img th:src="@{/images/indianemblem.png}" alt="Right Logo" class="logo-right" />
+</div>
+
+<!-- BLUE LINE -->
+<div class="blue-line"></div>
+
+<!-- TITLE -->
+<h2 class="dashboard-title">Sheet Dashboard</h2>
+
+<!-- TABLE CONTAINER -->
+<div class="table-container">
+    <table>
+        <thead>
+        <tr>
+            <th>Sheet Name</th>
+            <th>Summary</th>
+            <th>Entries</th>
+            <th>Status</th>
+            <th>Date Created</th>
+            <th>Deadline</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="sheet : ${sheets}">
+            <td th:text="${sheet.sheetName}">Sheet Name</td>
+            <td th:text="${sheet.summary}">Summary</td>
+            <td th:text="${sheet.numberOfEntries}">0</td>
+            <td th:text="${sheet.active ? 'Active' : 'Inactive'}">Active</td>
+            <td th:text="${sheet.dateCreated}">2025-06-27</td>
+            <td th:text="${sheet.deadline}">2025-07-10</td>
+            <td>
+                <a th:href="@{'/admin/open-sheet/' + ${sheet.id}}">
+                    <button class="open-btn">Open</button>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- CREATE SHEET BUTTON -->
+<div class="create-button-container">
+    <a th:href="@{/admin/create-sheet}">
+        <button class="create-button">➕ Create a New Sheet</button>
+    </a>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+    All Rights Reserved
+</div>
+
+</body>
+</html>

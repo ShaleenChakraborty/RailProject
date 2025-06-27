@@ -1,44 +1,51 @@
 package com.railways.entryportal.service;
 
-import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
-import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.model.*;
 
+import com.google.auth.http.HttpCredentialsAdapter;
+import com.google.auth.oauth2.GoogleCredentials;
+
 import org.springframework.stereotype.Service;
 
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.InputStream;
 import java.security.GeneralSecurityException;
+import java.util.Collections;
 import java.util.List;
 
 @Service
 public class GoogleSheetsService {
 
     private static final String APPLICATION_NAME = "Railway Entry Portal";
-    private static final String CREDENTIALS_FILE_PATH = "src/main/resources/credentials.json";
+    private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
+    private static final List<String> SCOPES = Collections.singletonList("https://www.googleapis.com/auth/spreadsheets");
 
-    private Sheets sheetsService;
+    private final Sheets sheetsService;
 
     public GoogleSheetsService() {
         try {
             this.sheetsService = createSheetsService();
-        } catch (IOException | GeneralSecurityException e) {
-            throw new RuntimeException("Failed to initialize Google Sheets service", e);
+        } catch (Exception e) {
+            throw new RuntimeException("❌ Failed to initialize Google Sheets service: " + e.getMessage(), e);
         }
     }
 
-    private Sheets createSheetsService() throws IOException, GeneralSecurityException {
-        NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
-        GoogleCredential credential = GoogleCredential
-                .fromStream(new FileInputStream(CREDENTIALS_FILE_PATH))
-                .createScoped(List.of("https://www.googleapis.com/auth/spreadsheets"));
+    private Sheets createSheetsService() throws Exception {
+        InputStream credentialsStream = getClass().getClassLoader().getResourceAsStream("credentials.json");
+        if (credentialsStream == null) {
+            throw new RuntimeException("❌ credentials.json not found in classpath (resources folder).");
+        }
 
-        return new Sheets.Builder(httpTransport, JacksonFactory.getDefaultInstance(), credential)
-                .setApplicationName(APPLICATION_NAME)
-                .build();
+        GoogleCredentials credentials = GoogleCredentials.fromStream(credentialsStream).createScoped(SCOPES);
+
+        return new Sheets.Builder(
+                GoogleNetHttpTransport.newTrustedTransport(),
+                JSON_FACTORY,
+                new HttpCredentialsAdapter(credentials)
+        ).setApplicationName(APPLICATION_NAME).build();
     }
 
     public String createSheetWithFields(List<String> fieldNames, String sheetTitle) {
@@ -46,6 +53,7 @@ public class GoogleSheetsService {
             // Step 1: Create the spreadsheet
             Spreadsheet spreadsheet = new Spreadsheet()
                     .setProperties(new SpreadsheetProperties().setTitle(sheetTitle));
+
             spreadsheet = sheetsService.spreadsheets().create(spreadsheet).execute();
             String spreadsheetId = spreadsheet.getSpreadsheetId();
 
@@ -58,9 +66,9 @@ public class GoogleSheetsService {
                     .setValueInputOption("RAW")
                     .execute();
 
-            return spreadsheet.getSpreadsheetUrl(); // Get the viewable URL
+            return spreadsheet.getSpreadsheetUrl(); // return sheet URL
         } catch (Exception e) {
-            throw new RuntimeException("Failed to create and update Google Sheet: " + e.getMessage(), e);
+            throw new RuntimeException("❌ Failed to create/update Google Sheet: " + e.getMessage(), e);
         }
     }
 }

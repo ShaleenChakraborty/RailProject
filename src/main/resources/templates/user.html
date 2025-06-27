@@ -1,11 +1,37 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
     <title>User Dashboard</title>
+    <style>
+        body {
+          font-family: Calibri, sans-serif;
+          background-color: #f3f3f3;
+          padding: 2rem;
+          text-align: center;
+        }
+        .button {
+          display: inline-block;
+          padding: 1rem 2rem;
+          margin: 1rem;
+          font-size: 1.2rem;
+          background-color: #2F2F8F;
+          color: white;
+          text-decoration: none;
+          border-radius: 10px;
+          transition: background-color 0.3s ease;
+        }
+        .button:hover {
+          background-color: #1d1d66;
+        }
+        .logout {
+          background-color: #D9592A;
+        }
+    </style>
 </head>
 <body>
-<h2>Welcome, User!</h2>
+<h1>Welcome, User</h1>
 <p>This is your dashboard.</p>
-<a href="/logout">Logout</a>
+<a th:href="@{/logout}" class="button logout">🚪 Logout</a>
 </body>
 </html>

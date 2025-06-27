@@ -173,8 +173,8 @@ body {
   font-size: 0.9rem;
 }
 .para {
-  background-color: black;
-  color: white; /* (optional) for visibility */
+  background-color: white;
+  color: color; /* (optional) for visibility */
   text-align: justify;
   padding: 0.8rem;
   font-size: 0.8rem;

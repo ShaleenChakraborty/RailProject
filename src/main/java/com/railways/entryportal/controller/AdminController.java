@@ -1,59 +1,33 @@
 package com.railways.entryportal.controller;
+import com.railways.entryportal.dto.SheetFormDto;
 
-import com.railways.entryportal.model.Datasheet;
-import com.railways.entryportal.repository.DataSheetRepository;
-import com.railways.entryportal.service.GoogleSheetsService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.List;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
 
-    @Autowired
-    private GoogleSheetsService sheetService;
-
-    @Autowired
-    private DataSheetRepository sheetRepo;
-
-    // 🔹 Old: Create Sheet from Admin Form (Title + Fields)
-    @PostMapping("/createSheet")
-    public String createSheet(@RequestParam String title, @RequestParam String fields) {
-        List<String> headers = Arrays.asList(fields.split(","));
-
-        // Create sheet and get spreadsheetId
-        String spreadsheetId = sheetService.createSheetWithFields(headers, title);
-
-
-        // Save to DB
-        Datasheet dataSheet = new Datasheet();
-        dataSheet.setTitle(title);
-        dataSheet.setHeaders(headers);
-        dataSheet.setSpreadsheetId(spreadsheetId);
-        dataSheet.setCreatedAt(LocalDateTime.now());
-
-        sheetRepo.save(dataSheet);
-
-        return "redirect:/admin/dashboard";
+    // Admin main dashboard
+    @GetMapping("/dashboard")
+    public String dashboard() {
+        return "admin-dashboard"; // Points to src/main/resources/templates/admin-dashboard.html
     }
 
-    // 🔹 New: Quick Test Sheet Generator (Hardcoded Fields)
-    @GetMapping("/create-sheet")
-    @ResponseBody
-    public String createSheetTest() {
-        try {
-            List<String> fields = List.of("Name", "Designation", "Department", "Shift Timing");
-            String url = sheetService.createSheetwithFields("Test Sheet " + System.currentTimeMillis(), fields);
-
-
-            return "Google Sheet Created: <a href='" + url + "' target='_blank'>" + url + "</a>";
-        } catch (Exception e) {
-            return "Error: " + e.getMessage();
-        }
+    // Page showing active users (e.g. list of logged-in users or roles)
+    @GetMapping("/active-users")
+    public String activeUsers() {
+        return "active-users"; // Points to src/main/resources/templates/active-users.html
     }
+
+    // Sheet dashboard with table of active sheets
+    @GetMapping("/sheet-dashboard")
+    public String sheetDashboard(Model model) {
+        // You can add logic to fetch and attach sheet list to the model if needed
+        return "sheet-dashboard"; // Points to src/main/resources/templates/sheet-dashboard.html
+    }
+
+
 }
